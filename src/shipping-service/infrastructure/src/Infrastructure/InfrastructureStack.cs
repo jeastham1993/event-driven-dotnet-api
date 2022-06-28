@@ -42,35 +42,24 @@ namespace Infrastructure
 
             var existingVpc = Vpc.FromLookup(this, "AppVpc", new VpcLookupOptions()
             {
-                VpcName = "copilot-event-driven-dotnet-test",
+                VpcName = "copilot-shipping-service-test",
                 IsDefault = false,
             });
 
-            var targetGroup = new NetworkTargetGroup(this, "NetworkTargetGroup", new NetworkTargetGroupProps()
+            var proxy = new LambdaProxy(this, "TestProxy", new LambdaProxyProps()
             {
-                TargetGroupName = "nlb-target-group",
+                ProxyIdentifier = "test-proxy",
+                ForwardingUrl = "http://event-receiver.test.shipping-service.local:8080/receiver",
+                EventBus = centralEventBus,
+                EventPattern = new EventPattern()
+                {
+                    Source = new[] { "order-service" },
+                },
                 Vpc = existingVpc,
-                TargetType = TargetType.ALB,
-                Port = 80,
-                Protocol = Amazon.CDK.AWS.ElasticLoadBalancingV2.Protocol.TCP
-            });
-
-            var nlb = new NetworkLoadBalancer(this, "AppNLB", new NetworkLoadBalancerProps()
-            {
-                Vpc = existingVpc,
-                VpcSubnets = new SubnetSelection()
+                Subnets = new SubnetSelection()
                 {
                     Subnets = existingVpc.IsolatedSubnets
-                },
-                InternetFacing = false,
-                LoadBalancerName = "shipping-nlb"
-            });
-
-            var vpcLink = new VpcLink(this, "ShippingApiLink", new VpcLinkProps()
-            {
-                VpcLinkName = "shipping-apigw-link",
-                Targets = new INetworkLoadBalancer[1] { existingNlb },
-                Description = "VPC link to provide access to EDA Dotnet API VPC"
+                }
             });
         }
     }

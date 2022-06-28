@@ -8,7 +8,16 @@ public class EventWrapper
 
     public string version { get; set; } = string.Empty;
     public string source { get; set; } = string.Empty;
-    public OrderCreatedEventData detail { get; set; }
+    public EventData detail { get; set; }
+}
+
+public class EventData
+{
+    public OrderCreatedEventData Data { get; set; }
+
+    public string EventName { get; set; }
+
+    public string Source { get; set; }
 }
 
 public class OrderCreatedEventData

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Amazon.EventBridge;
 using Amazon.EventBridge.Model;
+using Newtonsoft.Json;
 using OrderService.Api.Events;
 
 namespace OrderService.Api.Infrastructure;
@@ -14,7 +15,7 @@ public class EventBridgeEventBus : IEventBus
         this._eventBridgeClient = eventBridgeClient;
     }
 
-    public async Task PublishAsync(IEvent evt)
+    public async Task PublishAsync(IntegrationEvent evt)
     {
         await this._eventBridgeClient.PutEventsAsync(new PutEventsRequest()
         {
@@ -22,7 +23,7 @@ public class EventBridgeEventBus : IEventBus
             {
                 new PutEventsRequestEntry()
                 {
-                    Detail = JsonSerializer.Serialize(evt),
+                    Detail = JsonConvert.SerializeObject(evt),
                     DetailType = evt.EventName,
                     Source = evt.Source,
                     EventBusName = Environment.GetEnvironmentVariable("EVENT_BUS_NAME"),

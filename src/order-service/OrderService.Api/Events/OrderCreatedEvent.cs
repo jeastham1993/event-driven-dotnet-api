@@ -2,7 +2,7 @@ using OrderService.Api.Models;
 
 namespace OrderService.Api.Events;
 
-public class OrderCreatedEvent : IEvent
+public class OrderCreatedEvent : IntegrationEvent
 {
     public OrderCreatedEvent(Order order)
     {
@@ -12,11 +12,9 @@ public class OrderCreatedEvent : IEvent
             OrderNumber = order.OrderNumber
         };
     }
-    public string EventName => "order-service.order-created";
-
-    public string Source => "order-service";
-
-    public OrderCreatedEventData Data { get; set; }
+    public override string EventName => "order-service.order-created";
+    
+    public new OrderCreatedEventData Data { get;  }
 }
 
 public class OrderCreatedEventData

@@ -17,7 +17,10 @@ cdk.out
 *.sln.docstates
 
 # User-specific files (MonoDevelop/Xamarin Studio)
-*.userprefs
+*.
+
+# ZIP files
+*.zip
 
 # Build results
 [Dd]ebug/

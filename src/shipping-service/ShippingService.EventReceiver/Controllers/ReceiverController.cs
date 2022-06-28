@@ -22,7 +22,7 @@ public class ReceiverController : ControllerBase
     public async Task<IActionResult> ReceiveEvent([FromBody] EventWrapper evtData)
     {
         this._logger.LogInformation(JsonSerializer.Serialize(evtData));
-        await this._shippingRepo.StoreAsync(new ShippingData(evtData.detail.CustomerId, evtData.detail.OrderNumber));
+        await this._shippingRepo.StoreAsync(new ShippingData(evtData.detail.Data.CustomerId, evtData.detail.Data.OrderNumber));
         
         return this.Ok();
     }
