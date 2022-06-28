@@ -1,6 +1,6 @@
 # Event Driven Archiecture with .NET API's
 
-This sample project demonstrates how to build an event driven architecture on AWS using ECS Fargate, .NET 6 REST API's and AWS CoPilot. AWS Lambda requires a paradigm shift for developers, both in programming and deployment. Whilst Lambda is the recommended compute approach for event driven compute, it is still possible to build a serverless event driven application using REST API's.
+This sample project demonstrates how to build an event driven architecture on AWS using ECS Fargate, .NET 6 REST API's and AWS CoPilot. AWS Lambda requires a paradigm shift for developers, both in programming and deployment. Whilst Lambda is built specifically to be event driven, it is still possible to build a serverless event driven application using standard REST API's.
 
 The sample was inspired in part by this [post](https://aws.amazon.com/blogs/compute/sending-amazon-eventbridge-events-to-private-endpoints-in-a-vpc/) on the AWS Compute Blog by [Emily Shea](https://twitter.com/em__shea).
 
